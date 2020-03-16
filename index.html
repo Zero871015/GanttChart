@@ -1,1 +1,102 @@
-H
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- googleGanttChart JS -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<link href="css/main.css" rel="stylesheet">
+
+</head>
+<body>
+	<nav class="navbar navbar-dark bg-dark">
+		<span class="navbar-text" style="">
+		    Gantt Chart Project
+		</span>		
+		<div style="float: right;">
+			<input id="importname" type="file" class="btn btn-light btn-sm mb-1" style="float: left;margin-right: 10px; " onchange="getObjectURL(this.files[0])">
+			<!--<button id="import" type="button" class="btn btn-light btn-sm mb-1" onclick="importData()" style="float: left;margin-right: 10px; ">import</button>-->
+
+			<button id="download" type="button" class="btn btn-light btn-sm mb-1" onclick="DownloadData()" style="float: right;">download</button>	
+		</div>
+		
+
+	</nav>
+	<!--- Add --->	
+	<div class="container-fluid">
+		<p >
+			<h5>Add New Task</h5>
+		</p>
+		<form class="form-inline">
+			<label class="sr-only" for="inlineFormInputName2">Add</label>
+			<input type="text" class="col-sm-1 form-control form-control-sm mb-1 mr-sm-1" id="taskName" placeholder="TaskName">
+
+			<label class="col-sm-1 col-form-label col-form-label-sm" for="inlineFormInputName2">Start Day</label>
+			<input  type="date" class="col-sm-2 form-control form-control-sm mb-1 mr-sm-1" id="startDay" placeholder="Start Day">
+
+			<label class="col-sm-1 col-form-label col-form-label-sm" for="inlineFormInputName2">End day</label>
+			<input type="date" class="col-sm-2 form-control form-control-sm mb-1 mr-sm-1" id="endDay" placeholder="End Day">
+
+			<label class="col-sm-1 col-form-label col-form-label-sm" for="inlineFormInputName2">Duration</label>
+			<input type="number"  min="1"class="col-sm-1 form-control form-control-sm mb-1 mr-sm-1" id="duration" placeholder="1Day">
+
+			<label class="col-sm-1 col-form-label col-form-label-sm" for="inlineFormInputName2">Percent Complete</label>
+			<input type="number"  min="0" max="100" class="col-sm-1 form-control form-control-sm mb-1 mr-sm-1" id="percentComplete" placeholder="0%">
+
+			<input type="text" class="col-sm-1 form-control form-control-sm mb-1 mr-sm-1" id="dependencies" placeholder="Dependencies Name">
+
+			<button type="button" class="btn btn-success btn-sm mb-1" onclick="AddTask()">Add</button>
+
+		</form>	
+		<p>	
+	</div>
+
+	<!--- Gantt Chart --->	
+	<div class="container-fluid" style="background-color: white;">
+		<div id="chart_div"></div>
+	</div>
+
+	<!--- Modify --->	
+	<div class="container-fluid">
+		<p >
+			<h5>Modify Task</h5>
+		</p>
+		<form class="form-inline">
+			<label class="sr-only" for="inlineFormInputName2">Add</label>
+			<input type="text" class="col-sm-1 form-control form-control-sm mb-1 mr-sm-1" id="taskName2" placeholder="Task name">
+
+			<label class="col-sm-1 col-form-label col-form-label-sm" for="inlineFormInputName2">Start Day</label>
+			<input type="date" class="col-sm-2 form-control form-control-sm mb-1 mr-sm-1" id="startDay2" placeholder="Start Day">
+
+			<label class="col-sm-1 col-form-label col-form-label-sm" for="inlineFormInputName2">End day</label>
+			<input type="date" class="col-sm-2 form-control form-control-sm mb-1 mr-sm-1" id="endDay2" placeholder="End Day">
+
+			<label class="col-sm-1 col-form-label col-form-label-sm" for="inlineFormInputName2">Duration</label>
+			<input type="number"  min="1"class="col-sm-1 form-control form-control-sm mb-1 mr-sm-1" id="duration2" placeholder="1Day">
+
+			<label class="col-sm-1 col-form-label col-form-label-sm" for="inlineFormInputName2">Percent Complete</label>
+			<input type="number"  min="0" max="100" class="col-sm-1 form-control form-control-sm mb-1 mr-sm-1" id="percentComplete2" placeholder="0%">
+			<input type="text" class="col-sm-1 form-control form-control-sm mb-1 mr-sm-1" id="dependencies2" placeholder="Dependencies Name">
+
+		 	<button type="button" class="btn btn-primary btn-sm mb-1" onclick="ModifyTask()" style="margin-right: 10px;">Save</button>
+		 	<button type="button" class="btn btn-danger btn-sm mb-1" onclick="DeleteTask()">Delete</button>
+		</form>	
+		<p>	
+	</div>
+
+	<!--bootstrap-->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<!--jjjj-->
+    <script src="js/main.js"></script>
+</body>
+</html>
